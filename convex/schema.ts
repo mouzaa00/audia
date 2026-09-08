@@ -4,13 +4,11 @@ import { authTables } from "@convex-dev/auth/server";
 
 export default defineSchema({
   ...authTables,
-  numbers: defineTable({
-    value: v.number(),
-  }),
   ideas: defineTable({
     title: v.string(),
     description: v.string(),
     status: v.string(),
     submitter: v.string(),
-  }),
+    upvotes: v.number(),
+  }).index("by_upvotes", ["upvotes"]),
 });
