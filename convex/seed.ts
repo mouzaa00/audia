@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { internalMutation } from "./_generated/server";
+import { mutation } from "./_generated/server";
 
 const dummyIdeas = [
   {
@@ -8,7 +8,8 @@ const dummyIdeas = [
       "Add a manual dark mode toggle button in the header so users can switch themes without relying on system preferences.",
     status: "open",
     submitter: "Alice Chen",
-    upvotes: 42,
+    votesCount: 42,
+    commentsCount: 2,
   },
   {
     title: "Keyboard shortcuts",
@@ -16,7 +17,8 @@ const dummyIdeas = [
       "Support common keyboard shortcuts like Cmd+K for search, Cmd+/ for help, and arrow keys for navigation between ideas.",
     status: "planned",
     submitter: "Bob Martinez",
-    upvotes: 38,
+    votesCount: 38,
+    commentsCount: 13,
   },
   {
     title: "Email notifications for status changes",
@@ -24,7 +26,8 @@ const dummyIdeas = [
       "Send an email notification to the submitter when their idea's status changes from open to planned or in progress.",
     status: "open",
     submitter: "Charlie Park",
-    upvotes: 27,
+    votesCount: 27,
+    commentsCount: 4,
   },
   {
     title: "Drag and drop reordering",
@@ -32,7 +35,8 @@ const dummyIdeas = [
       "Allow administrators to manually reorder ideas via drag and drop, independent of upvote count.",
     status: "in_progress",
     submitter: "Diana Reeves",
-    upvotes: 19,
+    votesCount: 19,
+    commentsCount: 7,
   },
   {
     title: "Markdown support in descriptions",
@@ -40,7 +44,8 @@ const dummyIdeas = [
       "Parse markdown in idea descriptions so submitters can add formatting, code blocks, and links to their proposals.",
     status: "open",
     submitter: "Ethan Brooks",
-    upvotes: 15,
+    votesCount: 15,
+    commentsCount: 11,
   },
   {
     title: "Duplicate idea detection",
@@ -48,11 +53,12 @@ const dummyIdeas = [
       "When a user submits a new idea, suggest similar existing ideas to reduce duplicates and consolidate votes.",
     status: "open",
     submitter: "Fiona Gallagher",
-    upvotes: 11,
+    votesCount: 11,
+    commentsCount: 0,
   },
 ];
 
-export const seedIdeas = internalMutation({
+export const seedIdeas = mutation({
   args: {},
   returns: v.number(),
   handler: async (ctx) => {

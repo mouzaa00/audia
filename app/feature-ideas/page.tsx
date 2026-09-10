@@ -5,8 +5,7 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 
 const statusStyles: Record<string, string> = {
-  open:
-    "border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300",
+  open: "border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300",
   planned:
     "border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
   in_progress:
@@ -19,7 +18,6 @@ const statusStyles: Record<string, string> = {
 
 export default function FeatureIdeasPage() {
   const ideas = useQuery(api.ideas.listIdeas);
-  const upvoteIdea = useMutation(api.ideas.upvoteIdea);
 
   return (
     <>
@@ -58,10 +56,6 @@ export default function FeatureIdeasPage() {
                 description={idea.description}
                 status={idea.status}
                 submitter={idea.submitter}
-                upvotes={idea.upvotes}
-                onUpvote={() =>
-                  void upvoteIdea({ ideaId: idea._id as Id<"ideas"> })
-                }
               />
             ))}
           </div>
@@ -76,39 +70,14 @@ function IdeaCard({
   description,
   status,
   submitter,
-  upvotes,
-  onUpvote,
 }: {
   title: string;
   description: string;
   status: string;
   submitter: string;
-  upvotes: number;
-  onUpvote: () => void;
 }) {
   return (
     <div className="flex gap-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm hover:shadow-md transition-all duration-200">
-      <button
-        onClick={onUpvote}
-        className="flex flex-col items-center justify-center gap-0.5 min-w-[3.25rem] h-14 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-orange-300 dark:hover:border-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200 cursor-pointer active:scale-95"
-        aria-label="Upvote"
-      >
-        <svg
-          className="w-4 h-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 15l-6-6-6 6" />
-        </svg>
-        <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-          {upvotes}
-        </span>
-      </button>
-
       <div className="flex-1 min-w-0">
         <h3 className="font-bold text-slate-800 dark:text-slate-200 leading-snug text-base">
           {title}
