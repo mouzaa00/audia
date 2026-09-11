@@ -8,7 +8,7 @@ const dummyIdeas = [
       "Add a manual dark mode toggle button in the header so users can switch themes without relying on system preferences.",
     status: "open",
     submitter: "Alice Chen",
-    votesCount: 42,
+    upvotesCount: 42,
     commentsCount: 2,
   },
   {
@@ -17,7 +17,7 @@ const dummyIdeas = [
       "Support common keyboard shortcuts like Cmd+K for search, Cmd+/ for help, and arrow keys for navigation between ideas.",
     status: "planned",
     submitter: "Bob Martinez",
-    votesCount: 38,
+    upvotesCount: 38,
     commentsCount: 13,
   },
   {
@@ -26,7 +26,7 @@ const dummyIdeas = [
       "Send an email notification to the submitter when their idea's status changes from open to planned or in progress.",
     status: "open",
     submitter: "Charlie Park",
-    votesCount: 27,
+    upvotesCount: 27,
     commentsCount: 4,
   },
   {
@@ -35,7 +35,7 @@ const dummyIdeas = [
       "Allow administrators to manually reorder ideas via drag and drop, independent of upvote count.",
     status: "in_progress",
     submitter: "Diana Reeves",
-    votesCount: 19,
+    upvotesCount: 19,
     commentsCount: 7,
   },
   {
@@ -44,7 +44,7 @@ const dummyIdeas = [
       "Parse markdown in idea descriptions so submitters can add formatting, code blocks, and links to their proposals.",
     status: "open",
     submitter: "Ethan Brooks",
-    votesCount: 15,
+    upvotesCount: 15,
     commentsCount: 11,
   },
   {
@@ -53,7 +53,7 @@ const dummyIdeas = [
       "When a user submits a new idea, suggest similar existing ideas to reduce duplicates and consolidate votes.",
     status: "open",
     submitter: "Fiona Gallagher",
-    votesCount: 11,
+    upvotesCount: 11,
     commentsCount: 0,
   },
 ];

@@ -9,14 +9,14 @@ export default defineSchema({
     description: v.string(),
     status: v.string(),
     submitter: v.string(),
-    votesCount: v.number(),
+    upvotesCount: v.number(),
     commentsCount: v.number(),
   }),
-  ideaVotes: defineTable({
+  upvotes: defineTable({
     user: v.id("users"),
     idea: v.id("ideas"),
-  }).index("by_idea", ["idea"]),
-  ideaComments: defineTable({
+  }).index("by_idea_user", ["idea", "user"]),
+  comments: defineTable({
     user: v.id("users"),
     idea: v.id("ideas"),
     body: v.string(),

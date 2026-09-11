@@ -2,7 +2,6 @@
 
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
 
 const statusStyles: Record<string, string> = {
   open: "border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300",
@@ -56,6 +55,8 @@ export default function FeatureIdeasPage() {
                 description={idea.description}
                 status={idea.status}
                 submitter={idea.submitter}
+                upvotesCount={idea.upvotesCount}
+                commentsCount={idea.commentsCount}
               />
             ))}
           </div>
@@ -70,14 +71,39 @@ function IdeaCard({
   description,
   status,
   submitter,
+  upvotesCount,
+  commentsCount,
 }: {
   title: string;
   description: string;
   status: string;
   submitter: string;
+  upvotesCount: number;
+  commentsCount: number;
 }) {
   return (
     <div className="flex gap-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm hover:shadow-md transition-all duration-200">
+      <button
+        type="button"
+        aria-label={`Upvote ${title}`}
+        className="group flex h-fit min-w-14 flex-col items-center gap-0.5 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-2 text-slate-500 transition-colors hover:border-orange-500 hover:bg-orange-50 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-slate-600 dark:bg-slate-700/60 dark:text-slate-300 dark:hover:border-orange-400 dark:hover:bg-orange-950/30 dark:hover:text-orange-400 dark:focus-visible:ring-offset-slate-800"
+      >
+        <svg
+          aria-hidden="true"
+          className="h-4 w-4 transition-transform group-hover:-translate-y-0.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m6 15 6-6 6 6" />
+        </svg>
+        <span className="text-sm font-bold leading-none tabular-nums">
+          {upvotesCount}
+        </span>
+      </button>
       <div className="flex-1 min-w-0">
         <h3 className="font-bold text-slate-800 dark:text-slate-200 leading-snug text-base">
           {title}
@@ -120,7 +146,7 @@ function IdeaCard({
             >
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            0
+            {commentsCount}
           </span>
         </div>
       </div>

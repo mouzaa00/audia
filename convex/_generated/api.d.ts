@@ -12,6 +12,7 @@ import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as ideas from "../ideas.js";
 import type * as seed from "../seed.js";
+import type * as upvotes from "../upvotes.js";
 
 import type {
   ApiFromModules,
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   ideas: typeof ideas;
   seed: typeof seed;
+  upvotes: typeof upvotes;
 }>;
 
 /**
