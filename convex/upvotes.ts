@@ -10,6 +10,14 @@ export const upvoteToggle = mutation({
       throw new ConvexError("Unauthorized");
     }
 
+    const idea = await ctx.db
+      .query("ideas")
+      .withIndex("by_id", (q) => q.eq("_id", args.ideaId))
+      .unique();
+    if (!idea) {
+      throw new ConvexError("Idea not found");
+    }
+
     const existing = await ctx.db
       .query("upvotes")
       .withIndex("by_idea_user", (q) =>
@@ -19,10 +27,18 @@ export const upvoteToggle = mutation({
 
     // If a user already upvoted an idea, delete it
     if (existing) {
+      // Decrease the upvote count of that specific idea by 1
+      await ctx.db.patch("ideas", args.ideaId, {
+        upvotesCount: idea.upvotesCount - 1,
+      });
       await ctx.db.delete("upvotes", existing._id);
       return existing._id;
     }
 
+    // Increase the upvote count of that specific idea by 1
+    await ctx.db.patch("ideas", args.ideaId, {
+      upvotesCount: idea.upvotesCount + 1,
+    });
     const voteId = await ctx.db.insert("upvotes", {
       user: userId,
       idea: args.ideaId,

@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Doc } from "@/convex/_generated/dataModel";
 
 const statusStyles: Record<string, string> = {
   open: "border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300",
@@ -49,15 +50,7 @@ export default function FeatureIdeasPage() {
         ) : (
           <div className="flex flex-col gap-4">
             {ideas.map((idea) => (
-              <IdeaCard
-                key={idea._id}
-                title={idea.title}
-                description={idea.description}
-                status={idea.status}
-                submitter={idea.submitter}
-                upvotesCount={idea.upvotesCount}
-                commentsCount={idea.commentsCount}
-              />
+              <IdeaCard key={idea._id} {...idea} />
             ))}
           </div>
         )}
@@ -66,26 +59,17 @@ export default function FeatureIdeasPage() {
   );
 }
 
-function IdeaCard({
-  title,
-  description,
-  status,
-  submitter,
-  upvotesCount,
-  commentsCount,
-}: {
-  title: string;
-  description: string;
-  status: string;
-  submitter: string;
-  upvotesCount: number;
-  commentsCount: number;
-}) {
+function IdeaCard(idea: Doc<"ideas">) {
+  const upvoteToggle = useMutation(api.upvotes.upvoteToggle);
+
   return (
     <div className="flex gap-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm hover:shadow-md transition-all duration-200">
       <button
+        onClick={() => {
+          upvoteToggle({ ideaId: idea._id });
+        }}
         type="button"
-        aria-label={`Upvote ${title}`}
+        aria-label={`Upvote ${idea.title}`}
         className="group flex h-fit min-w-14 flex-col items-center gap-0.5 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-2 text-slate-500 transition-colors hover:border-orange-500 hover:bg-orange-50 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-slate-600 dark:bg-slate-700/60 dark:text-slate-300 dark:hover:border-orange-400 dark:hover:bg-orange-950/30 dark:hover:text-orange-400 dark:focus-visible:ring-offset-slate-800"
       >
         <svg
@@ -101,15 +85,15 @@ function IdeaCard({
           <path d="m6 15 6-6 6 6" />
         </svg>
         <span className="text-sm font-bold leading-none tabular-nums">
-          {upvotesCount}
+          {idea.upvotesCount}
         </span>
       </button>
       <div className="flex-1 min-w-0">
         <h3 className="font-bold text-slate-800 dark:text-slate-200 leading-snug text-base">
-          {title}
+          {idea.title}
         </h3>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed line-clamp-2">
-          {description}
+          {idea.description}
         </p>
 
         <div className="flex items-center gap-3 mt-3">
@@ -124,17 +108,17 @@ function IdeaCard({
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-            {submitter}
+            {idea.submitter}
           </span>
         </div>
 
         <div className="flex items-center gap-2 mt-3 flex-wrap">
           <span
             className={`text-xs font-medium px-2.5 py-1 rounded-md capitalize ${
-              statusStyles[status] ?? statusStyles.open
+              statusStyles[idea.status] ?? statusStyles.open
             }`}
           >
-            {status.replace("_", " ")}
+            {idea.status.replace("_", " ")}
           </span>
           <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1 ml-auto">
             <svg
@@ -146,7 +130,7 @@ function IdeaCard({
             >
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            {commentsCount}
+            {idea.commentsCount}
           </span>
         </div>
       </div>
