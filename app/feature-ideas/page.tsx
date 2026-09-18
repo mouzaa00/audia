@@ -3,6 +3,8 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
+import { useState } from "react";
+import SubmitIdeaModal from "./SubmitIdeaModal";
 
 const statusStyles: Record<string, string> = {
   open: "border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300",
@@ -17,10 +19,12 @@ const statusStyles: Record<string, string> = {
 };
 
 export default function FeatureIdeasPage() {
+  const [open, setOpen] = useState(false);
   const ideas = useQuery(api.ideas.listIdeas);
 
   return (
     <>
+      {open && <SubmitIdeaModal onClose={() => setOpen(false)} />}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md p-4 border-b border-slate-200 dark:border-slate-700 shadow-sm">
         <h1 className="text-xl font-bold text-slate-800 dark:text-slate-200">
           Feature Ideas
@@ -31,6 +35,14 @@ export default function FeatureIdeasPage() {
       </header>
 
       <main className="max-w-3xl mx-auto p-6">
+        <div className="w-full flex mb-3">
+          <button
+            onClick={() => setOpen(true)}
+            className="ml-auto px-4 py-2 rounded border bg-orange-50 border-orange-500 text-orange-600 dark:bg-orange-950/30 dark:border-orange-400 dark:text-orange-400 hover:border-orange-500 hover:bg-orange-50 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:hover:border-orange-400 dark:hover:bg-orange-950/30 dark:hover:text-orange-400 dark:focus-visible:ring-offset-slate-800"
+          >
+            Submit
+          </button>
+        </div>
         {ideas === undefined ? (
           <div className="flex items-center gap-2 py-12 justify-center">
             <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
